@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #ec4899;
+  --bg-color: #0f172a;
+  --panel-bg: rgba(30, 41, 59, 0.7);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-gold: #fbbf24;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: radial-gradient(circle at top right, var(--bg-color), #000000);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+  background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: -webkit-linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Card Styles */
+.playing-card {
+  width: 100px;
+  height: 140px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  user-select: none;
+}
+
+.playing-card.red { color: #dc2626; }
+.playing-card.black { color: #171717; }
+
+.playing-card:hover:not(.disabled) {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+}
+
+.playing-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.card-suit {
+  font-size: 2rem;
+  text-align: center;
+  align-self: center;
+}
+
+.card-value-bottom {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  transform: rotate(180deg);
+}
+
+.card-back {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  border: 4px solid white;
+  width: 100px;
+  height: 140px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.menu-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.input-field {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.2);
+  color: white;
+  font-family: 'Outfit';
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.input-field:focus {
+  border-color: var(--primary-color);
+}
+
+/* Game Table */
+.game-table {
+  width: 100%;
+  max-width: 1000px;
+  height: 80vh;
+  background: radial-gradient(ellipse at center, #065f46, #022c22);
+  border-radius: 200px;
+  border: 10px solid #78350f;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 50px rgba(0,0,0,0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.opponent-area, .player-area {
+  display: flex;
+  justify-content: center;
+  gap: -30px;
+  height: 140px;
+}
+
+.opponent-area .playing-card, .opponent-area .card-back {
+  transform: scale(0.8);
+  margin: 0 -15px;
+}
+
+.player-area .playing-card {
+  margin: 0 -10px;
+}
+
+.center-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.vira-container {
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.vira-label {
+  font-weight: 800;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.trick-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.played-card {
+  transform: scale(1.1);
+  animation: dropCard 0.3s ease-out;
+}
+
+@keyframes dropCard {
+  0% { transform: translateY(-50px) scale(1.2) rotate(10deg); opacity: 0; }
+  100% { transform: translateY(0) scale(1.1) rotate(0); opacity: 1; }
+}
+
+/* Info Panel */
+.info-panel {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.hand-value {
+  color: var(--accent-gold);
+  font-weight: 800;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Controls */
+.controls-area {
+  position: absolute;
+  bottom: 40px;
+  right: 60px;
+  display: flex;
+  gap: 10px;
+}
+
+.truco-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  border-radius: 190px;
+}
+
+.truco-box {
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.truco-box h2 {
+  font-size: 2.5rem;
+  color: var(--accent-gold);
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.truco-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
